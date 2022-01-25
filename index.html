@@ -37,18 +37,54 @@
         e.preventDefault();
         const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const validBD = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+        let validatedEmail;
+        let validatedBD;
         if (!name.value){
             alert("Name cannot be blank.")
         };
         if (!email.value || !email.value.match(validEmail)){
             alert("Email cannot be blank and must be a valid email address.")
-        };
+        } else {validatedEmail = email.value;}
         if (birthDate.value){
-            if (!birthDate.value.match(validBD))
-            alert("Birth date must be a valid date. Acceptable formats are MM/DD/YYYY")
+            if (!birthDate.value.match(validBD)){
+            alert("Birth date must be a valid date. Acceptable formats are MM/DD/YYYY")}
+            else {
+            validatedBD=birthDate.value;
+            }
         };
         if (!check.checked){
             alert("We require your permission to contact you back.")
+        }
+        if (name.value && validatedEmail && check.checked){
+            const url='https://my-json-server.typicode.com/JustUtahCoders/interview-users-api/users'
+            
+            const user = [
+                {
+                    "id": 1,
+                    "name": name.value,
+                    "email": validatedEmail,
+                    "birthDate": validatedBD,
+                    "emailConsent": check.checked
+                }
+            ]
+            fetch(url, {
+                method:'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            }).then(function (response) {
+                if(response.ok){
+                    return response.json();
+                }
+                return Promise.reject(response);
+            }).then(function (data){
+                console.log(data);
+            }).catch(function (error){
+                console.warn('Something went wrong!', error);
+            });
+
+            clearForm();
         }
     }
     function clearForm(e){
@@ -57,7 +93,6 @@
         email.value=""
         birthDate.value=""
         check.checked=false;
-        console.log("clicked")
     }
 
     </script>
