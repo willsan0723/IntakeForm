@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+  </head>
+
+  <body>
+    <div>
+      <h1>Contact Us</h1>
+      <form id="form">
+        <p>Name</p>
+        <input type="text" id="name" />
+        <p>Email</p>
+        <input type="text" id="email" />
+        <p>Birth Date</p>
+        <input type="text" id="birthdate" />
+        </br>
+        </br>
+        <input type="checkbox" id="check" />I agree to be contacted via e-mail.
+        </br>
+        <input type="submit" />
+      </form>
+    </div>
+
+    <script>
+    const form = document.getElementById("form")
+    const name = document.getElementById("name")
+    const email = document.getElementById("email")
+    const birthdate = document.getElementById("birthdate")
+    const check = document.getElementById("check")
+
+    form.onsubmit = handleFormSubmit;
+    function handleFormSubmit(e){
+        e.preventDefault();
+        console.log(name.value);
+        console.log(email.value);
+        console.log(birthdate.value);
+        console.log(check.checked);
+    }
+    </script>
+  </body>
+</html>
