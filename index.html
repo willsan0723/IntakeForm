@@ -13,30 +13,53 @@
         <p>Email</p>
         <input type="text" id="email" />
         <p>Birth Date</p>
-        <input type="text" id="birthdate" />
+        <input type="text" id="birthDate" />
         </br>
         </br>
         <input type="checkbox" id="check" />I agree to be contacted via e-mail.
         </br>
-        <input type="submit" />
+        <button id="clear" type="button">Clear</button><input type="submit"/>
       </form>
+      
     </div>
 
     <script>
     const form = document.getElementById("form")
-    const name = document.getElementById("name")
-    const email = document.getElementById("email")
-    const birthdate = document.getElementById("birthdate")
-    const check = document.getElementById("check")
+    let name = document.getElementById("name")
+    let email = document.getElementById("email")
+    let birthDate = document.getElementById("birthDate")
+    let check = document.getElementById("check")
+    const clear = document.getElementById("clear")
 
     form.onsubmit = handleFormSubmit;
+    clear.onclick = clearForm;
     function handleFormSubmit(e){
         e.preventDefault();
-        console.log(name.value);
-        console.log(email.value);
-        console.log(birthdate.value);
-        console.log(check.checked);
+        const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const validBD = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+        if (!name.value){
+            alert("Name cannot be blank.")
+        };
+        if (!email.value || !email.value.match(validEmail)){
+            alert("Email cannot be blank and must be a valid email address.")
+        };
+        if (birthDate.value){
+            if (!birthDate.value.match(validBD))
+            alert("Birth date must be a valid date. Acceptable formats are MM/DD/YYYY")
+        };
+        if (!check.checked){
+            alert("We require your permission to contact you back.")
+        }
     }
+    function clearForm(e){
+        e.preventDefault();
+        name.value=""
+        email.value=""
+        birthDate.value=""
+        check.checked=false;
+        console.log("clicked")
+    }
+
     </script>
   </body>
 </html>
